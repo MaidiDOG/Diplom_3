@@ -9,12 +9,12 @@ import java.time.Duration;
 
 public class ProfilePage {
     private final WebDriver driver;
-    private final By buttonOnLogo = By.xpath("//*[@id=\"root\"]/div/header/nav/div"); //Локатор для кнопки при нажатии на логотип
-    private final By buttonOnProfilePage = By.xpath("//*[@id=\"root\"]/div/header/nav/a"); //Локатор для кнопки "Личный Кабинет"
-    private final By headerDragBun = By.xpath("//*[@id=\"root\"]/div/main/section[2]/ul/li[1]/div/span/span[1]"); //Локатор для заголовка "Перетяните булочку сюда (верх)"
-    private final By buttonExit = By.xpath("//*[@id=\"root\"]/div/main/div/nav/ul/li[3]/button");//Локатор кнопки выхода из аккаунта
-    private final By buttonConstructor = By.xpath("//*[@id=\"root\"]/div/header/nav/ul/li[1]/a/p");//Локатор кнопки конструктора
-    private final By headerLogin = By.xpath("//*[@id=\"root\"]/div/main/div/h2");//Локатор заголовка  "Войти"
+    private final By buttonOnLogo = By.className("AppHeader_header__logo__2D0X2"); //Локатор для кнопки при нажатии на логотип
+    private final By buttonOnProfilePage = By.xpath("//p[text() = 'Личный Кабинет']"); //Локатор для кнопки "Личный Кабинет"
+    private final By headerDragBun = By.xpath("//span[text() = 'Перетяните булочку сюда (верх)']"); //Локатор для заголовка "Перетяните булочку сюда (верх)"
+    private final By buttonExit = By.xpath("//button[text() = 'Выход']");
+    private final By buttonConstructor = By.xpath("//p[text() = 'Конструктор']"); //Локатор кнопки конструктора
+    private final By headerLogin = By.xpath("//button[text() = 'Войти']"); //Локатор заголовка  "Войти"
 
     public ProfilePage(WebDriver driver) {
         this.driver = driver;

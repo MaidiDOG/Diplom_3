@@ -1,36 +1,14 @@
 import io.qameta.allure.junit4.DisplayName;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
+
 import pages.LoginPage;
 import pages.ProfilePage;
-import restApi.User;
 
-import static config.AppConfig.BASE_URL;
-import static config.WebDriverFactory.createWebDriver;
 
-public class ProfilePageTest {
-    private WebDriver driver;
-    private User user = new User();
-    private String email;
-    private String password;
-    @Before
-    public void setUp() {
-        driver = createWebDriver();
-        driver.get(BASE_URL);
-
-        email = "AleX_Kosmos@test.ru";
-        password = "qwert123";
-        user.registerNewUser(email, password, "Alex");
-    }
-    @After
-    public void teardown() {
-        user.deleteUser(email, password);
-        driver.quit();
-    }
-
+public class ProfilePageTest extends BaseTestWithUser {
     @Test
     @DisplayName("Переход по клику на Личный Кабинет")
     public void checkTransitionToProfilePageTest(){

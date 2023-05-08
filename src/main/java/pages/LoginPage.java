@@ -13,21 +13,23 @@ import java.time.Duration;
 public class LoginPage {
     private WebDriver driver;
     //Локаторы для кнопки/поля для входа в "Личный Кабинет"
-    private final By loginButton = By.xpath("//*[@id=\"root\"]/div/main/section[2]/div/button"); //локатор для кнопки "Войти в аккаунт"
-    private final By emailFieldForLogin = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[1]/div/div/input"); //Поле для ввода email на странице входа
-    private final By passwordFieldForLogin = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[2]/div/div/input"); //Поле для ввода password на странице входа
-    private final By buttonForLoginInRegister = By.xpath ("//*[@id=\"root\"]/div/main/div/div/p/a"); //Локтор для кнопки "Войти" на странице регистрации.
-    private final By loginButtonForLogin = By.xpath("//*[@id=\"root\"]/div/main/div/form/button");
+    private final By loginButton = By.xpath("//button[text() = 'Войти в аккаунт']"); //локатор для кнопки "Войти в аккаунт"
+    private final By getOrderButton = By.xpath("//button[text() = 'Оформить заказ']"); //локатор для кнопки "Войти в аккаунт"
+    private final By emailFieldForLogin = By.xpath("//label[text() = 'Email']/parent::*/input"); //Поле для ввода email на странице входа
+    private final By passwordFieldForLogin = By.xpath("//label[text() = 'Пароль']/parent::*/input"); //Поле для ввода password на странице входа
+    private final By buttonForLoginInRegister = By.xpath("//a[text() = 'Войти']"); //Локтор для кнопки "Войти" на странице регистрации.
+    private final By loginButtonForLogin = By.xpath("//button[text() = 'Войти']");
     //Локаторы для кнопки/поля для регистрации аккаунта
-    private final By nameFieldForRegister = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[1]/div/div/input");
-    private final By emailFieldForRegister = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[2]/div/div/input");
-    private final By passwordFieldForRegister = By.xpath("//*[@id=\"root\"]/div/main/div/form/fieldset[3]/div/div/input");
-    private final By registerButtonForRegister = By.xpath("//*[@id=\"root\"]/div/main/div/form/button");
+    private final By nameFieldForRegister = By.xpath("//label[text() = 'Имя']/parent::*/input");
+    private final By emailFieldForRegister = By.xpath("//label[text() = 'Email']/parent::*/input");
+    private final By passwordFieldForRegister = By.xpath("//label[text() = 'Пароль']/parent::*/input");
+    private final By registerButtonForRegister = By.xpath("//button[text() = 'Зарегистрироваться']");
+    private final By buttonForLoginAfterRegister = By.xpath("//button[text() = 'Войти']"); //Локтор для кнопки "Войти" после регистрации.
     private By registrationLinkButton = By.xpath("//a[text() = 'Зарегистрироваться']");
     private By incorrectPassword = By.xpath("//*[text() = 'Некорректный пароль']");
     //Локаторы для кнопки/поля для восстановления пароля
-    private final By buttonForRestPassword = By.xpath("//*[@id=\"root\"]/div/main/div/div/p[2]/a"); //Забыли пароль? Восстановить пароль
-    private final By buttonForLoginInRestPassword = By.xpath("//*[@id=\"root\"]/div/main/div/div/p/a");
+    private final By buttonForRestPassword = By.xpath("//a[text() = 'Восстановить пароль']"); //Забыли пароль? Восстановить пароль
+    private final By buttonForLoginInRestPassword = By.xpath("//a[text() = 'Войти']");
 
 
     public LoginPage(WebDriver driver) {
@@ -57,14 +59,11 @@ public class LoginPage {
 
         driver.findElement(registerButtonForRegister).click();
     }
-    public boolean isLoginButtonDisplayed(){
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(loginButtonForLogin));
-        return driver.findElement(loginButtonForLogin).isDisplayed();
-    }
+
     public boolean isIncorrectPasswordDisplayed(){
         return driver.findElement(incorrectPassword).isDisplayed();
     }
+
     public void goToLoginPageByHeaderLink(){
         driver.findElement(loginButton).click();
     }
@@ -84,9 +83,16 @@ public class LoginPage {
 
     public boolean isCheckoutButtonDisplayed(){
         new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(loginButton));
+                .until(ExpectedConditions.visibilityOfElementLocated(getOrderButton));
 
-        return driver.findElement(loginButton).isDisplayed();
+        return driver.findElement(getOrderButton).isDisplayed();
+    }
+
+    public boolean isLogButtonDisplayed(){
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.visibilityOfElementLocated(buttonForLoginAfterRegister));
+
+        return driver.findElement(buttonForLoginAfterRegister).isDisplayed();
     }
     public void gotoLoginPageFromRegistration(){
         this.gotoRegistrationPage();
@@ -94,12 +100,14 @@ public class LoginPage {
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
         element.click();
     }
+
     public void gotoForgotPasswordPage(){
         this.gotoLoginPageByEnterAccountButton();
         WebElement element = driver.findElement(buttonForRestPassword);
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
         element.click();
     }
+
     public void gotoLoginPageFromForgotPassword(){
         this.gotoForgotPasswordPage();
         WebElement element = driver.findElement(buttonForLoginInRestPassword);
